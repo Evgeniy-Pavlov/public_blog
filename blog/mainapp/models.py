@@ -13,4 +13,4 @@ class UserBase(AbstractUser):
     is_company = models.BooleanField(default=False)
     company = models.CharField(null=True, max_length=20, unique=True)
     about_me = models.CharField(null=True, max_length=500)
-    logo = models.ImageField(null=True)
+    logo = models.ImageField(upload_to='userbase', blank=True, null=True)
