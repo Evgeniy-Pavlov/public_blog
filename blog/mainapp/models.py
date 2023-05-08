@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Create your models here.
 class UserBase(AbstractUser):
-    login = models.CharField(unique=True, max_length=10)
+    usertag = models.CharField(unique=True, max_length=10)
     email = models.EmailField(unique=True)
     last_name = models.CharField(null=True, max_length=20)
     first_name = models.CharField(null=True, max_length=20)
