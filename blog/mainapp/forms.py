@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
 from .models import UserBase
 from django import forms
 
@@ -26,3 +26,14 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = UserBase
         fields = ('username', 'usertag', 'email', 'about_me', 'is_company', 'company', 'logo')
+
+
+class UpdatePasswordForm(PasswordChangeForm):
+
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = UserBase
+        fields = ('old_password', 'password1', 'password2')

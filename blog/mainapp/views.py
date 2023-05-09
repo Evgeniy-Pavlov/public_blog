@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from .models import UserBase
-from .forms import RegisterForm, UpdateUserForm
-from django.contrib.auth.views import LoginView, LogoutView
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 
 # Create your views here.
 class RegisterView(CreateView):
@@ -29,5 +29,12 @@ class UserUpdate(UpdateView):
     model = UserBase
     form_class = UpdateUserForm
     template_name = 'mainapp/userbase_update_form.html'
+    success_url = '/'
+
+
+class UserPasswordUpdate(PasswordChangeView):
+    model = UserBase
+    form_class = UpdatePasswordForm
+    template_name = 'mainapp/change_user_password.html'
     success_url = '/'
     
