@@ -28,25 +28,34 @@
             <a class="nav-link" href="/">Новости</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/">Стати</a>
+            <a class="nav-link" href="/">Статьи</a>
           </li>
+          {% if not user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="/register/">Регистрация</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/login/"><img src="{% static 'img/login_favicon.ico' %}">Вход</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout/"><img src="{% static 'img/logout_favicon.ico' %}">Выход</a>
-          </li>
+          {% endif %}
+          
+          {% if user.is_authenticated %}
+          
           <a class="btn btn-primary" style="margin-left: 5px;" href="/">Создать статью</a>
           <a class="btn btn-primary" style="margin-left: 5px;" href="/">Создать новость</a>
+          {% endif %}
+          
+          
         </ul>
         
         <form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Введите" aria-label="Search">
           <button class="btn btn-secondary" type="submit">Найти</button>
         </form>
+        {% if user.is_authenticated %}
+        <a class="nav-link" style="margin-left: 5px;" href="/profile/{{user.id}}">{{user.username}}</a>
+        <a class="nav-link" href="/logout/"><img src="{% static 'img/logout_favicon.ico' %}">Выход</a>
+        {% endif %}
       </div>
     </div>
   </nav>
