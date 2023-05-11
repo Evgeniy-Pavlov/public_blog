@@ -4,6 +4,7 @@ from django import forms
 
 
 class RegisterForm(UserCreationForm):
+    """Форма регистрации."""
 
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     usertag = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -17,6 +18,7 @@ class RegisterForm(UserCreationForm):
 
 
 class UpdateUserForm(forms.ModelForm):
+    """Форма обновления пользователя."""
 
     username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
     usertag = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -29,6 +31,7 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class UpdatePasswordForm(PasswordChangeForm):
+    """Форма обновления пароля пользователя."""
 
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
