@@ -6,11 +6,11 @@ from django import forms
 class RegisterForm(UserCreationForm):
     """Форма регистрации."""
 
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    usertag = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Имя пользователя')
+    usertag = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Тэг пользователя')
+    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}), label='Адрес электронной почты')
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Пароль')
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Подтверждение пароля')
 
     class Meta:
         model = UserBase
@@ -20,10 +20,10 @@ class RegisterForm(UserCreationForm):
 class UpdateUserForm(forms.ModelForm):
     """Форма обновления пользователя."""
 
-    username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    usertag = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    about_me = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Имя пользователя')
+    usertag = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Тэг пользователя')
+    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}), label='Адрес электронной почты')
+    about_me = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Обо мне')
 
     class Meta:
         model = UserBase
@@ -33,9 +33,9 @@ class UpdateUserForm(forms.ModelForm):
 class UpdatePasswordForm(PasswordChangeForm):
     """Форма обновления пароля пользователя."""
 
-    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Старый пароль')
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Новый пароль')
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Подтвердите новый пароль')
 
     class Meta:
         model = UserBase
