@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
-from .models import UserBase
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from .models import UserBase, Article
 from django import forms
 
 
@@ -40,3 +41,14 @@ class UpdatePasswordForm(PasswordChangeForm):
     class Meta:
         model = UserBase
         fields = ('old_password', 'password1', 'password2')
+
+
+class ArticleForm(forms.ModelForm):
+    """Форма создания статьи пользователем."""
+
+    title = forms.CharField(label='Заголовок')
+    body = forms.CharField(widget=CKEditorUploadingWidget(), label='Тело статьи')
+
+    class Meta:
+        model = Article
+        fields = ('title', 'body')

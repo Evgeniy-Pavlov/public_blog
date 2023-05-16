@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+<a href="/">Вернуться к списку</a>
+    <h1 class="display-6">{{object.title}}</h1>
+    {% if art.author.id == user.id or user.is_superuser %}
+    <p class="card-text"><a href="/article-update/{{art.id}}">Редактировать</a></p>
+    <p class="card-text"><a href="/article-delete/{{art.id}}">Удалить</a></p>
+    {% endif %}
+    <p class="lead">
+        Автор: @{{object.author.usertag}} Создано: {{object.date_create}}
+      </p>
+      {% if object.author.company %}
+        <p class="lead">
+            Компания: {{object.author.company}}
+        </p>
+      {% endif %}
+    <div class="bd-example-snippet bd-code-snippet"><p>{{object.body | safe}}</p></div>
+{% endblock  %}
