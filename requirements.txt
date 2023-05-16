@@ -5,3 +5,4 @@ Django==4.1.7
 beautifulsoup4==4.12.2
 lxml==4.9.2
 Pillow==9.5.0
+django-ckeditor==6.5.1

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+
+{% for art in object_list %}
+    {% if not art.deleted %}
+    <div class="card border-light mb-3" style="max-width: auto;">
+        <div class="card-header">@{{art.author.usertag}}</div>
+        
+    <div class="card-body">
+    <a href="/article-detail/{{art.id}}"><h5 class="card-title">{{art.title}}</h5></a>
+    {% if art.author.id == user.id or user.is_superuser %}
+    <p class="card-text"><a href="/article-update/{{art.id}}">Редактировать</a></p>
+    <p class="card-text"><a href="/article-delete/{{art.id}}">Удалить</a></p>
+    {% endif %}
+    
+    <div>{{art.body|safe}}</div>
+  </div>
+    {% endif %}
+</div>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}

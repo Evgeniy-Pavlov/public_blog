@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from .models import UserBase
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
+from .models import UserBase, Article
 from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 
@@ -43,4 +43,10 @@ class UserPasswordUpdate(PasswordChangeView):
     form_class = UpdatePasswordForm
     template_name = 'mainapp/change_user_password.html'
     success_url = '/'
+
+class ArticleList(ListView):
+    model = Article
+    template_name = 'mainapp/article_list.html'
+
+
     

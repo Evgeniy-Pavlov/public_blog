@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdate, UserDetail, UserPasswordUpdate
+from django.urls import path, include
+from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdate, UserDetail, UserPasswordUpdate, ArticleList
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -26,5 +26,7 @@ urlpatterns = [
     path('logout/', UserLogoutView.as_view()),
     path('user-update/<int:pk>', UserUpdate.as_view()),
     path('profile/<int:pk>', UserDetail.as_view()),
-    path('change-password/<int:pk>', UserPasswordUpdate.as_view())
+    path('change-password/<int:pk>', UserPasswordUpdate.as_view()),
+    path('', ArticleList.as_view()),
+    path('ckeditor/', include('ckeditor_uploader.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
