@@ -30,7 +30,7 @@ class UserDetail(DetailView):
 
 
 class UserUpdate(UpdateView):
-    """Представление формы обновления данных пользователя."""
+    """Представление обновления профиля пользователя."""
     model = UserBase
     form_class = UpdateUserForm
     template_name = 'mainapp/userbase_update_form.html'
