@@ -20,5 +20,5 @@ class AdminUser(admin.ModelAdmin):
 
 @admin.register(Article)
 class AdminArticle(admin.ModelAdmin):
-    list_display = ('title', 'author', 'date_create')
+    list_display = ('title', 'author', 'date_create', 'deleted')
     form = ArticleAdminForm

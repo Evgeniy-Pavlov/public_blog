@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
 from .models import UserBase, Article
-from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -85,3 +85,13 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
+class ArticleDelete(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    model = Article
+    form_class = ArticleDeleteForm
+    template_name = 'mainapp/delete_article.html'
+    success_url = '/'
+
+    def form_valid(self, form) -> HttpResponse:
+        form.instance.deleted = True
+        return super().form_valid(form)

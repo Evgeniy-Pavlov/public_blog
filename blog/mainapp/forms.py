@@ -53,4 +53,11 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ('title', 'body')
+
+class ArticleDeleteForm(forms.ModelForm):
+    """Форма удаления статьи"""
+
+    class Meta:
+        model=Article
+        fields = ()
     
