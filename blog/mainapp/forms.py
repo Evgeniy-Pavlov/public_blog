@@ -48,7 +48,9 @@ class ArticleForm(forms.ModelForm):
 
     title = forms.CharField(label='Заголовок')
     body = forms.CharField(widget=CKEditorUploadingWidget(), label='Тело статьи')
+    
 
     class Meta:
         model = Article
         fields = ('title', 'body')
+    
