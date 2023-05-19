@@ -4,8 +4,8 @@
 <a href="/">Вернуться к списку</a>
     <h1 class="display-6">{{object.title}}</h1>
     {% if art.author.id == user.id or user.is_superuser %}
-    <p class="card-text"><a href="/article-update/{{art.id}}">Редактировать</a></p>
-    <p class="card-text"><a href="/article-delete/{{art.id}}">Удалить</a></p>
+    <p class="card-text"><a href="/article-update/{{object.id}}">Редактировать</a></p>
+    <p class="card-text"><a href="/article-delete/{{object.id}}">Удалить</a></p>
     {% endif %}
     <p class="lead">
         Автор: @{{object.author.usertag}} Создано: {{object.date_create}}
