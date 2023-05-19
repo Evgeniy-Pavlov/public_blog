@@ -25,3 +25,12 @@ class Article(models.Model):
     date_create = models.DateTimeField(null=True, default=datetime.now)
     author = models.ForeignKey(UserBase, on_delete=models.SET_NULL, null=True)
     deleted = models.BooleanField(default=False)
+
+
+class CommentsArticle(models.Model):
+    """Модель хранения комментариев к статьям"""
+    commentator = models.ForeignKey(UserBase, on_delete=models.SET_NULL, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    text_comments = models.CharField(max_length=400)
+    date_create = models.DateTimeField(default=datetime.now)
+

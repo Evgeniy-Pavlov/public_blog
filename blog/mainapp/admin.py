@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserBase, Article
+from .models import UserBase, Article, CommentsArticle
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -22,3 +22,8 @@ class AdminUser(admin.ModelAdmin):
 class AdminArticle(admin.ModelAdmin):
     list_display = ('title', 'author', 'date_create', 'deleted')
     form = ArticleAdminForm
+
+
+@admin.register(CommentsArticle)
+class AdminCommentsArticle(admin.ModelAdmin):
+    list_display = ('commentator', 'article', 'text_comments', 'date_create')

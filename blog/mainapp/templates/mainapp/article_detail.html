@@ -16,4 +16,15 @@
         </p>
       {% endif %}
     <div class="bd-example-snippet bd-code-snippet"><p>{{object.body | safe}}</p></div>
+
+    {% if user.is_authenticated %}
+    <div class="mb-3">
+      <h5 class="display-6">Оставьте комментарий тут</h5>
+    <form action="/comments_create/{{object.id}}" method="post">
+      {% csrf_token %}
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Введите комментарий тут" name="text_comments"></textarea>
+      <button class="btn btn-primary" style="margin-top: 10px;">Отправить комментарий</button>
+    </form> 
+  </div>
+    {% endif %}
 {% endblock  %}

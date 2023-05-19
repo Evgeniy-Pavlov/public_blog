@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdate, UserDetail, UserPasswordUpdate, ArticleList, ArticleDetail, ArticleCreate, ArticleUpdate, ArticleDelete
+from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdate, UserDetail, \
+UserPasswordUpdate, ArticleList, ArticleDetail, ArticleCreate, ArticleUpdate, ArticleDelete, CommentsCreate
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -32,5 +33,6 @@ urlpatterns = [
     path('article-detail/<int:pk>', ArticleDetail.as_view()),
     path('article-create/', ArticleCreate.as_view()),
     path('article-update/<int:pk>', ArticleUpdate.as_view()),
-    path('article-delete/<int:pk>', ArticleDelete.as_view())
+    path('article-delete/<int:pk>', ArticleDelete.as_view()),
+    path('comments_create/<int:pk>', CommentsCreate.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

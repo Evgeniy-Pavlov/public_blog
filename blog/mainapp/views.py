@@ -1,9 +1,9 @@
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView, DetailView, ListView
-from .models import UserBase, Article
-from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, View
+from .models import UserBase, Article, CommentsArticle
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -85,7 +85,10 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
+    
 class ArticleDelete(LoginRequiredMixin, UpdateView):
+    """Представление удаления статьи.
+    Статье проставляется признак удаления и она более в общем списке не отображается."""
     login_url = '/login/'
     model = Article
     form_class = ArticleDeleteForm
@@ -95,3 +98,18 @@ class ArticleDelete(LoginRequiredMixin, UpdateView):
     def form_valid(self, form) -> HttpResponse:
         form.instance.deleted = True
         return super().form_valid(form)
+    
+
+class CommentsCreate(LoginRequiredMixin, CreateView):
+    """Класс создания комментариев"""
+    login_url = '/login/'
+    model = CommentsArticle
+    form_class = CommentsArticleCreateForm
+
+    def form_valid(self, form, pk) -> HttpResponse:
+        form.instance.commentator = self.request.user
+        form.instance.article = pk
+        super().form_valid(form)
+
+        return redirect(f'/article-detail/{pk}')
+

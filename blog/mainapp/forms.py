@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetPasswordForm
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from .models import UserBase, Article
+from .models import UserBase, Article, CommentsArticle
 from django import forms
 
 
@@ -60,4 +60,11 @@ class ArticleDeleteForm(forms.ModelForm):
     class Meta:
         model=Article
         fields = ()
-    
+
+
+class CommentsArticleCreateForm(forms.ModelForm):
+    """Форма создания комментария."""
+
+    class Meta:
+        model = CommentsArticle
+        fields = ('text_comments',)
