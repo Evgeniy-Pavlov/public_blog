@@ -34,5 +34,5 @@ urlpatterns = [
     path('article-create/', ArticleCreate.as_view()),
     path('article-update/<int:pk>', ArticleUpdate.as_view()),
     path('article-delete/<int:pk>', ArticleDelete.as_view()),
-    path('comments_create/<int:pk>', CommentsCreate.as_view())
+    path('comments-create/<int:pk>', CommentsCreate.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

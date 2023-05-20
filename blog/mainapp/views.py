@@ -100,16 +100,14 @@ class ArticleDelete(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
     
 
-class CommentsCreate(LoginRequiredMixin, CreateView):
+class CommentsCreate(LoginRequiredMixin, View):
     """Класс создания комментариев"""
     login_url = '/login/'
-    model = CommentsArticle
-    form_class = CommentsArticleCreateForm
 
-    def form_valid(self, form, pk) -> HttpResponse:
+    def post(self, request, pk):
+        form = CommentsArticleCreateForm(request.POST)
         form.instance.commentator = self.request.user
-        form.instance.article = pk
-        super().form_valid(form)
-
+        form.instance.article = Article.objects.get(id=pk)
+        form.save()
         return redirect(f'/article-detail/{pk}')
 
