@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body %}
 <a href="/">Вернуться к списку</a>
@@ -16,8 +17,19 @@
         </p>
       {% endif %}
     <div class="bd-example-snippet bd-code-snippet"><p>{{object.body | safe}}</p></div>
-
     {% if user.is_authenticated %}
+    <div>
+      <p class="card-text text-bg-info mb-3">Понравилось пользователям: {{object.likesarticle_set.all.count}}</p>
+      <form action="/liked/{{object.id}}", method="post">
+        {% csrf_token %}
+        <button class="btn btn-primary" style="margin-bottom: 10px;">
+          <svg src="{% static 'img/heart.svg' %}" fill="currentColor" width="16" height="16" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+          </svg>
+          Понравилось
+        </button>
+      </form>
+    </div>
     <div class="mb-3">
       <h5 class="display-6">Оставьте комментарий тут</h5>
     <form action="/comments-create/{{object.id}}" method="post">
@@ -27,14 +39,16 @@
     </form> 
   </div>
     {% endif %}
-  <ul class="list-group">
+    
     {% for comment in object.commentsarticle_set.all %}
-      <li class="list-item">
-        <div class="card-header text-primary mb-3">{{comment.commentator}}</div>
-                <div class="card-body ">
-                  <p class="card-text text-bg-info mb-3">{{comment.text_comments}}</p>
-                </div>
-      </li>
+      <div class="list-item">
+        <div class="card-header text-primary mb-3">
+          <p>@{{comment.commentator.usertag}}</p>
+          <p>{{comment.date_create}}</p>
+        </div>
+        <div class="card-body ">
+          <p class="card-text text-bg-info mb-3">{{comment.text_comments}}</p>
+        </div>
+      </div>
     {% endfor %}
-  </ul>
 {% endblock  %}

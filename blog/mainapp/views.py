@@ -2,8 +2,8 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View
-from .models import UserBase, Article, CommentsArticle
-from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm
+from .models import UserBase, Article, LikesArticle
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -105,9 +105,29 @@ class CommentsCreate(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def post(self, request, pk):
-        form = CommentsArticleCreateForm(request.POST)
-        form.instance.commentator = self.request.user
-        form.instance.article = Article.objects.get(id=pk)
-        form.save()
-        return redirect(f'/article-detail/{pk}')
+        if request.POST['text_comments']:
+            form = CommentsArticleCreateForm(request.POST)
+            form.instance.commentator = self.request.user
+            form.instance.article = Article.objects.get(id=pk)
+            form.save()
+            return redirect(f'/article-detail/{pk}')
+        else:
+            return redirect(f'/article-detail/{pk}')
+
+
+class LikesArticleAdd(LoginRequiredMixin, View):
+    """Представление для добавления лайков пользователями к статьям."""
+    login_url = '/login/'
+
+    def post(self, request, pk):
+        if not LikesArticle.objects.filter(article=Article.objects.get(id=pk), user_liked=self.request.user):
+            form = LikesArticleAddForm(request.POST)
+            form.instance.user_liked = self.request.user
+            form.instance.article = Article.objects.get(id=pk)
+            form.save()
+            return redirect(f'/article-detail/{pk}')
+        else:
+            LikesArticle.objects.filter(article=Article.objects.get(id=pk), user_liked=self.request.user).delete()
+            return redirect(f'/article-detail/{pk}')
+        
 

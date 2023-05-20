@@ -34,3 +34,8 @@ class CommentsArticle(models.Model):
     text_comments = models.CharField(max_length=400)
     date_create = models.DateTimeField(default=datetime.now)
 
+
+class LikesArticle(models.Model):
+    """Модель хранения лайков к статьям."""
+    user_liked = models.ForeignKey(UserBase, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
