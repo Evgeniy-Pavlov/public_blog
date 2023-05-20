@@ -27,4 +27,14 @@
     </form> 
   </div>
     {% endif %}
+  <ul class="list-group">
+    {% for comment in object.commentsarticle_set.all %}
+      <li class="list-item">
+        <div class="card-header text-primary mb-3">{{comment.commentator}}</div>
+                <div class="card-body ">
+                  <p class="card-text text-bg-info mb-3">{{comment.text_comments}}</p>
+                </div>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock  %}
