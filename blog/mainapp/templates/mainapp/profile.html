@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
 
-
-{% if not user.is_compamy %}
 <a href="/">Вернуться к списку</a>
 
 <h3>Информация о пользователе</h3>
@@ -13,13 +11,13 @@
     {% endif %}
     <p class="lead">Usertag: @{{user.usertag}}</p>
     {% if user.last_name %}
-    <p class="lead">Фамилия: @{{user.last_name}}</p>
+    <p class="lead">Фамилия: {{user.last_name}}</p>
     {% endif %}
     {% if user.first_name %}
-    <p class="lead">Имя: @{{user.first_name}}</p>
+    <p class="lead">Имя: {{user.first_name}}</p>
     {% endif %}
     {% if user.patronymic %}
-    <p class="lead">Отчество: @{{user.patronymic}}</p>
+    <p class="lead">Отчество: {{user.patronymic}}</p>
     {% endif %}
     {% if user.company %}
     <p class="lead">Компания: {{user.company}}</p>
@@ -32,27 +30,7 @@
         <li><a href="/change-password/{{user.id}}">Изменить пароль</a></li>
       </ul>
       
-    <p class="base">Создана: {{user.date_create}}</p>
-{% endif %}
+    <p class="base">Профиль создан: {{user.date_create}}</p>
 
-{% if user.is_company %}
-<a href="/">Вернуться к списку</a>
-<h3>Информация о компании</h3>
-    <h1 class="display-6 lead">{{user.company}}</h1>
-    {% if user.logo %}
-    <img src="{{user.logo.url}}" class= "rounded-circle" width="150" height="150">
-    {% endif %}
-    <p class="lead">Usertag: @{{user.usertag}}</p>
-    <p class="lead">Компания: {{user.company}}</p>
-    {% if user.about_me %}
-    <p class="lead">О нас: {{user.about_me}}</p>
-      <ul>
-        <li><a href="/user-update/{{user.id}}">Редактировать</a></li>
-        <li><a href="/change-password/{{user.id}}">Изменить пароль</a></li>
-      </ul>
-    <p class="base">
-        Создана: {{user.date_create}}</p>
-    {% endif %}
-{% endif %}
 {% endblock %}
 

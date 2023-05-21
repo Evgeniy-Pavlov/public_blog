@@ -23,12 +23,18 @@ class UpdateUserForm(forms.ModelForm):
 
     username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Имя пользователя')
     usertag = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Тэг пользователя')
+    last_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Фамилия')
+    first_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Имя')
+    patronymic = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Отчество')
     email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}), label='Адрес электронной почты')
     about_me = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Обо мне')
+    is_company = forms.BooleanField(label='Признак корпоративного аккаунта.', required=False)
+    company = forms.CharField(max_length=20, label='Название компании')
+    logo = forms.ImageField(label='Фото профиля')
 
     class Meta:
         model = UserBase
-        fields = ('username', 'usertag', 'email', 'about_me', 'is_company', 'company', 'logo')
+        fields = ('username', 'usertag', 'last_name', 'first_name', 'patronymic', 'email', 'about_me', 'is_company', 'company', 'logo')
 
 
 class UpdatePasswordForm(PasswordChangeForm):
@@ -46,8 +52,8 @@ class UpdatePasswordForm(PasswordChangeForm):
 class ArticleForm(forms.ModelForm):
     """Форма создания статьи пользователем."""
 
-    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Заголовок')
-    preview = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Превью статьи')
+    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Заголовок')
+    preview = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Превью статьи')
     body = forms.CharField(widget=CKEditorUploadingWidget(), label='Тело статьи')
     
 

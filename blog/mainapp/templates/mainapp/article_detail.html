@@ -4,7 +4,7 @@
 {% block body %}
 <a href="/">Вернуться к списку</a>
     <h1 class="display-6">{{object.title}}</h1>
-    {% if art.author.id == user.id or user.is_superuser %}
+    {% if art.author.id == user.id and user.is_authenticated or user.is_superuser %}
     <p class="card-text"><a href="/article-update/{{object.id}}">Редактировать</a></p>
     <p class="card-text"><a href="/article-delete/{{object.id}}">Удалить</a></p>
     {% endif %}

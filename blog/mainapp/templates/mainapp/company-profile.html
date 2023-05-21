@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<a href="/">Вернуться к списку</a>
+<h3>Информация о компании</h3>
+    <h1 class="display-6 lead">{{user.company}}</h1>
+    {% if user.logo %}
+    <img src="{{user.logo.url}}" class= "rounded-circle" width="150" height="150">
+    {% endif %}
+    <p class="lead">Usertag: @{{user.usertag}}</p>
+    <p class="lead">Компания: {{user.company}}</p>
+    {% if user.about_me %}
+    <p class="lead">О нас: {{user.about_me}}</p>
+      <ul>
+        <li><a href="/user-update/{{user.id}}">Редактировать</a></li>
+        <li><a href="/change-password/{{user.id}}">Изменить пароль</a></li>
+      </ul>
+    <p class="base">
+        Создана: {{user.date_create}}</p>
+    {% endif %}
+{% endblock %}

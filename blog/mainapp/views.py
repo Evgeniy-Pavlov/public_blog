@@ -1,10 +1,13 @@
+from django.contrib import messages
 from django.forms.models import BaseModelForm
+from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View
 from .models import UserBase, Article, LikesArticle
 from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
@@ -19,6 +22,7 @@ class UserLoginView(LoginView):
     """Представление формы авторизации."""
     model = UserBase
     template_name = 'mainapp/login.html'
+    success_url = '/'
 
 
 class UserLogoutView(LogoutView):
@@ -26,32 +30,51 @@ class UserLogoutView(LogoutView):
     model = UserBase
 
 
-class UserDetail(DetailView):
+class UserDetail(LoginRequiredMixin, DetailView):
     """Представление профиля пользователя."""
     model = UserBase
-    template_name = 'mainapp/profile.html'
+    login_url = '/login/'
+
+    def get(self, request, pk):
+        if not UserBase.objects.get(username=self.request.user).is_company:
+            template_name = 'mainapp/profile.html'
+            return render(template_name=template_name, request=request)
+        else:
+            template_name = 'mainapp/company-profile.html'
+            return render(template_name=template_name, request=request)
 
 
-class UserUpdate(UpdateView):
+
+class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """Представление обновления профиля пользователя."""
     model = UserBase
+    login_url = '/login/'
     form_class = UpdateUserForm
     template_name = 'mainapp/userbase_update_form.html'
-    success_url = '/'
+    success_message = 'Изменения в профиле сохранены'
+
+    def get_success_url(self):
+        return f'/profile/{self.request.user.id}'
 
 
-class UserPasswordUpdate(PasswordChangeView):
+
+class UserPasswordUpdate(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     """Представление формы обновления пароля."""
     model = UserBase
+    login_url = '/login/'
     form_class = UpdatePasswordForm
     template_name = 'mainapp/change_user_password.html'
-    success_url = '/'
+    success_message = 'Пароль был успешно изменен'
+    
+    def get_success_url(self):
+        return f'/profile/{self.request.user.id}'
 
 
 class ArticleList(ListView):
     """Представление статей списком."""
     model = Article
     template_name = 'mainapp/article_list.html'
+
 
 
 class ArticleDetail(DetailView):
@@ -73,13 +96,14 @@ class ArticleCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
 
-class ArticleUpdate(LoginRequiredMixin, UpdateView):
+class ArticleUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """Представление редактирования и обновления статьи."""
     login_url = '/login/'
     model = Article
     form_class = ArticleForm
     template_name = 'mainapp/article_form.html'
     success_url = '/'
+    success_message = 'Изменения в статье сохранены'
 
     def form_valid(self, form) -> HttpResponse:
         form.instance.author = self.request.user
@@ -99,9 +123,10 @@ class ArticleDelete(LoginRequiredMixin, UpdateView):
         form.instance.deleted = True
         return super().form_valid(form)
     
+    
 
 class CommentsCreate(LoginRequiredMixin, View):
-    """Класс создания комментариев"""
+    """Класс создания комментариев""" 
     login_url = '/login/'
 
     def post(self, request, pk):
