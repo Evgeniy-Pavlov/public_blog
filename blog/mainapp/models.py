@@ -21,6 +21,7 @@ class UserBase(AbstractUser):
 class Article(models.Model):
     """Модель для хранения статей."""
     title = models.CharField(max_length=60, null=False)
+    preview = models.CharField(max_length=500, null=False, default='Это превью статьи к сожалению не было описано.')
     body = models.TextField(null=False)
     date_create = models.DateTimeField(null=True, default=datetime.now)
     author = models.ForeignKey(UserBase, on_delete=models.SET_NULL, null=True)

@@ -46,13 +46,14 @@ class UpdatePasswordForm(PasswordChangeForm):
 class ArticleForm(forms.ModelForm):
     """Форма создания статьи пользователем."""
 
-    title = forms.CharField(label='Заголовок')
+    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Заголовок')
+    preview = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Превью статьи')
     body = forms.CharField(widget=CKEditorUploadingWidget(), label='Тело статьи')
     
 
     class Meta:
         model = Article
-        fields = ('title', 'body')
+        fields = ('title', 'preview', 'body')
 
 
 class ArticleDeleteForm(forms.ModelForm):
