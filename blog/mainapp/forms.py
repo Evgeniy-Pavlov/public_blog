@@ -30,7 +30,7 @@ class UpdateUserForm(forms.ModelForm):
     about_me = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Обо мне')
     is_company = forms.BooleanField(label='Признак корпоративного аккаунта.', required=False)
     company = forms.CharField(max_length=20, label='Название компании')
-    logo = forms.ImageField(label='Фото профиля')
+    logo = forms.ImageField(label='Фото профиля', widget=forms.FileInput(attrs={'class': 'form-control', 'style': 'width: 500px;'}))
 
     class Meta:
         model = UserBase
