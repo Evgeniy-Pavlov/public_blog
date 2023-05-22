@@ -1,11 +1,8 @@
-from django.contrib import messages
-from django.forms.models import BaseModelForm
-from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View
-from .models import UserBase, Article, LikesArticle
-from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm
+from .models import UserBase, Article, LikesArticle, News, ImagesNews
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -44,7 +41,6 @@ class UserDetail(LoginRequiredMixin, DetailView):
             return render(template_name=template_name, request=request)
 
 
-
 class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """Представление обновления профиля пользователя."""
     model = UserBase
@@ -76,20 +72,20 @@ class ArticleList(ListView):
     template_name = 'mainapp/article_list.html'
 
 
-
 class ArticleDetail(DetailView):
     """Представление статьи для чтения."""
     model = Article
     template_name = 'mainapp/article_detail.html'
 
 
-class ArticleCreate(LoginRequiredMixin, CreateView):
+class ArticleCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """Представление создания статьи."""
     login_url = '/login/'
     model = Article
     form_class = ArticleForm
     template_name = 'mainapp/article_form.html'
     success_url = '/'
+    success_message = 'Статья успешно опубликована.'
 
     def form_valid(self, form) -> HttpResponse:
         form.instance.author = self.request.user
@@ -155,4 +151,15 @@ class LikesArticleAdd(LoginRequiredMixin, View):
             LikesArticle.objects.filter(article=Article.objects.get(id=pk), user_liked=self.request.user).delete()
             return redirect(f'/article-detail/{pk}')
         
+
+class CreateNews(LoginRequiredMixin, CreateView):
+    """Представление для создания новостей."""
+    model = News
+    login_url = '/login/'
+    success_url = '/'
+    template_name = 'mainapp/news_create.html'
+    form_class = NewsForm
+
+
+
 

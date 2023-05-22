@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from .models import UserBase, Article, CommentsArticle, LikesArticle
+from .models import UserBase, Article, CommentsArticle, LikesArticle, News
 from django import forms
 
 
@@ -85,3 +85,14 @@ class LikesArticleAddForm(forms.ModelForm):
         model = LikesArticle
         fields = ()
 
+
+class NewsForm(forms.ModelForm):
+    """Форма создания новости пользователем."""
+
+    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Заголовок')
+    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    
+
+    class Meta:
+        model = News
+        fields = ('text',)

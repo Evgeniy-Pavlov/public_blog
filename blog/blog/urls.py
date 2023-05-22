@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdate, UserDetail, \
-UserPasswordUpdate, ArticleList, ArticleDetail, ArticleCreate, ArticleUpdate, ArticleDelete, CommentsCreate, LikesArticleAdd
+UserPasswordUpdate, ArticleList, ArticleDetail, ArticleCreate, ArticleUpdate, ArticleDelete, CommentsCreate, LikesArticleAdd, CreateNews
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -35,5 +35,6 @@ urlpatterns = [
     path('article-update/<int:pk>', ArticleUpdate.as_view()),
     path('article-delete/<int:pk>', ArticleDelete.as_view()),
     path('comments-create/<int:pk>', CommentsCreate.as_view()),
-    path('liked/<int:pk>', LikesArticleAdd.as_view())
+    path('liked/<int:pk>', LikesArticleAdd.as_view()),
+    path('news-create/', CreateNews.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

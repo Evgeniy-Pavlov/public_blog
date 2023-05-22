@@ -40,3 +40,17 @@ class LikesArticle(models.Model):
     """Модель хранения лайков к статьям."""
     user_liked = models.ForeignKey(UserBase, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+
+class News(models.Model):
+    """Модель хранения новостей."""
+    author = models.ForeignKey(UserBase, on_delete=models.SET_NULL, null=True)
+    text = models.CharField(max_length=500, null=False)
+    date_create = models.DateTimeField(null=True, default=datetime.now)
+    deleted = models.BooleanField(default=False)
+
+
+class ImagesNews(models.Model):
+    """Модель хранения изображений к новостям."""
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='news_images', blank=True, null=True)
