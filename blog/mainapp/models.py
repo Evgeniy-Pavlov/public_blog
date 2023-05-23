@@ -49,8 +49,14 @@ class News(models.Model):
     date_create = models.DateTimeField(null=True, default=datetime.now)
     deleted = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = 'News'
+
 
 class ImagesNews(models.Model):
     """Модель хранения изображений к новостям."""
     news = models.ForeignKey(News, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='news_images', blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'ImagesNews'

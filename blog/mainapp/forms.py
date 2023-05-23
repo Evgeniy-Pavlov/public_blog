@@ -89,10 +89,9 @@ class LikesArticleAddForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     """Форма создания новости пользователем."""
 
-    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Заголовок')
-    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Заголовок', required=True)
+    images = forms.ImageField(widget=forms.FileInput(attrs={'multiple': True}), required=False)
     
-
     class Meta:
         model = News
-        fields = ('text',)
+        fields = ('text', 'images')

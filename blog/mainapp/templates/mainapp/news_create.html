@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="card border-light mb-3" style="max-width: auto;">
-    <form  method="POST">
+    <form enctype="multipart/form-data" method="POST">
         {% csrf_token %}
         {{form.media}}
         {{form.as_p}}

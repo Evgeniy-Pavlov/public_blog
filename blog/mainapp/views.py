@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, UpdateView, DetailView, ListView, View
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, View, FormView
 from .models import UserBase, Article, LikesArticle, News, ImagesNews
 from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -152,13 +152,24 @@ class LikesArticleAdd(LoginRequiredMixin, View):
             return redirect(f'/article-detail/{pk}')
         
 
-class CreateNews(LoginRequiredMixin, CreateView):
+class CreateNews(LoginRequiredMixin, FormView):
     """Представление для создания новостей."""
     model = News
     login_url = '/login/'
     success_url = '/'
     template_name = 'mainapp/news_create.html'
     form_class = NewsForm
+
+    def form_valid(self, form: NewsForm) :
+        print(form.cleaned_data['images'])
+        news_data = News.objects.create(author = self.request.user, text = form.cleaned_data['text'])
+        images = form.cleaned_data['images']
+        
+        if images:
+            ImagesNews.objects.create(news = news_data, image = images)
+                
+        return super().form_valid(form)
+
 
 
 
