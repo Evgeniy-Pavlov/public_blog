@@ -154,20 +154,17 @@ class LikesArticleAdd(LoginRequiredMixin, View):
 
 class CreateNews(LoginRequiredMixin, FormView):
     """Представление для создания новостей."""
-    model = News
     login_url = '/login/'
     success_url = '/'
     template_name = 'mainapp/news_create.html'
     form_class = NewsForm
 
     def form_valid(self, form: NewsForm) :
-        print(form.cleaned_data['images'])
         news_data = News.objects.create(author = self.request.user, text = form.cleaned_data['text'])
         images = form.cleaned_data['images']
-        
         if images:
-            ImagesNews.objects.create(news = news_data, image = images)
-                
+            for image in images:
+                ImagesNews.objects.create(news = news_data, image = image)
         return super().form_valid(form)
 
 
