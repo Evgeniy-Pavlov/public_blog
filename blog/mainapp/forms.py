@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import UserBase, Article, CommentsArticle, LikesArticle, News
-from multiupload.fields import MultiImageField, MultiFileField
+from multiupload.fields import MultiMediaField, MultiUploadMetaInput
 
 
 
@@ -91,10 +91,10 @@ class LikesArticleAddForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     """Форма создания новости пользователем."""
 
-    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Заголовок', required=True)
-    #images = MultiFileField(required=False, widget=forms.FileInput(attrs={'class': 'form-control', 'multiple': True, 'style': 'width: 500px;'}))
-    images = MultiFileField()
+    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Текст новости', required=True)
+    images = MultiMediaField(widget = MultiUploadMetaInput(attrs={'class': 'form-control', 'style': 'width: 850px;'}), label='Вложения')
     
     class Meta:
         model = News
-        fields = ('text', 'images')
+        fields = ('text',)
+
