@@ -168,6 +168,10 @@ class CreateNewsView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
+class NewsListView(ListView):
+    model = News
+    template_name = 'mainapp/news_list.html'
+
 
 
 
