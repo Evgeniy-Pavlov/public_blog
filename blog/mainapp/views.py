@@ -27,7 +27,7 @@ class UserLogoutView(LogoutView):
     model = UserBase
 
 
-class UserDetail(LoginRequiredMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     """Представление профиля пользователя."""
     model = UserBase
     login_url = '/login/'
@@ -41,7 +41,7 @@ class UserDetail(LoginRequiredMixin, DetailView):
             return render(template_name=template_name, request=request)
 
 
-class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """Представление обновления профиля пользователя."""
     model = UserBase
     login_url = '/login/'
@@ -54,7 +54,7 @@ class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 
-class UserPasswordUpdate(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+class UserPasswordUpdateView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     """Представление формы обновления пароля."""
     model = UserBase
     login_url = '/login/'
@@ -66,19 +66,19 @@ class UserPasswordUpdate(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
         return f'/profile/{self.request.user.id}'
 
 
-class ArticleList(ListView):
+class ArticleListView(ListView):
     """Представление статей списком."""
     model = Article
     template_name = 'mainapp/article_list.html'
 
 
-class ArticleDetail(DetailView):
+class ArticleDetailView(DetailView):
     """Представление статьи для чтения."""
     model = Article
     template_name = 'mainapp/article_detail.html'
 
 
-class ArticleCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class ArticleCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """Представление создания статьи."""
     login_url = '/login/'
     model = Article
@@ -92,7 +92,7 @@ class ArticleCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super().form_valid(form)
     
 
-class ArticleUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """Представление редактирования и обновления статьи."""
     login_url = '/login/'
     model = Article
@@ -106,7 +106,7 @@ class ArticleUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return super().form_valid(form)
     
     
-class ArticleDelete(LoginRequiredMixin, UpdateView):
+class ArticleDeleteView(LoginRequiredMixin, UpdateView):
     """Представление удаления статьи.
     Статье проставляется признак удаления и она более в общем списке не отображается."""
     login_url = '/login/'
@@ -121,7 +121,7 @@ class ArticleDelete(LoginRequiredMixin, UpdateView):
     
     
 
-class CommentsCreate(LoginRequiredMixin, View):
+class CommentsCreateView(LoginRequiredMixin, View):
     """Класс создания комментариев""" 
     login_url = '/login/'
 
@@ -136,7 +136,7 @@ class CommentsCreate(LoginRequiredMixin, View):
             return redirect(f'/article-detail/{pk}')
 
 
-class LikesArticleAdd(LoginRequiredMixin, View):
+class LikesArticleAddView(LoginRequiredMixin, View):
     """Представление для добавления лайков пользователями к статьям."""
     login_url = '/login/'
 
@@ -152,7 +152,7 @@ class LikesArticleAdd(LoginRequiredMixin, View):
             return redirect(f'/article-detail/{pk}')
         
 
-class CreateNews(LoginRequiredMixin, FormView):
+class CreateNewsView(LoginRequiredMixin, FormView):
     """Представление для создания новостей."""
     login_url = '/login/'
     success_url = '/'

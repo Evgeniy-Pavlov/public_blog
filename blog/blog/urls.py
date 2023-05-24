@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdate, UserDetail, \
-UserPasswordUpdate, ArticleList, ArticleDetail, ArticleCreate, ArticleUpdate, ArticleDelete, CommentsCreate, LikesArticleAdd, CreateNews
+from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdateView, UserDetailView, \
+UserPasswordUpdateView, ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, ArticleDeleteView, CommentsCreateView, LikesArticleAddView, CreateNewsView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,16 +25,16 @@ urlpatterns = [
     path('register/', RegisterView.as_view()),
     path('login/', UserLoginView.as_view()),
     path('logout/', UserLogoutView.as_view()),
-    path('user-update/<int:pk>', UserUpdate.as_view()),
-    path('profile/<int:pk>', UserDetail.as_view()),
-    path('change-password/<int:pk>', UserPasswordUpdate.as_view()),
-    path('', ArticleList.as_view()),
+    path('user-update/<int:pk>', UserUpdateView.as_view()),
+    path('profile/<int:pk>', UserDetailView.as_view()),
+    path('change-password/<int:pk>', UserPasswordUpdateView.as_view()),
+    path('', ArticleListView.as_view()),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('article-detail/<int:pk>', ArticleDetail.as_view()),
-    path('article-create/', ArticleCreate.as_view()),
-    path('article-update/<int:pk>', ArticleUpdate.as_view()),
-    path('article-delete/<int:pk>', ArticleDelete.as_view()),
-    path('comments-create/<int:pk>', CommentsCreate.as_view()),
-    path('liked/<int:pk>', LikesArticleAdd.as_view()),
-    path('news-create/', CreateNews.as_view())
+    path('article-detail/<int:pk>', ArticleDetailView.as_view()),
+    path('article-create/', ArticleCreateView.as_view()),
+    path('article-update/<int:pk>', ArticleUpdateView.as_view()),
+    path('article-delete/<int:pk>', ArticleDeleteView.as_view()),
+    path('comments-create/<int:pk>', CommentsCreateView.as_view()),
+    path('liked/<int:pk>', LikesArticleAddView.as_view()),
+    path('news-create/', CreateNewsView.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
