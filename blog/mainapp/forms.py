@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from .models import UserBase, Article, CommentsArticle, LikesArticle, News
+from .models import UserBase, Article, CommentsArticle, LikesArticle, News, LikesNews
 from multiupload.fields import MultiMediaField, MultiUploadMetaInput
 
 
@@ -104,4 +104,12 @@ class NewsDeleteForm(forms.ModelForm):
 
     class Meta:
         model = News
+        fields = ()
+
+
+class LikesNewsAddForm(forms.ModelForm):
+    """Форма добавления лайков к статьям."""
+
+    class Meta:
+        model = LikesNews
         fields = ()

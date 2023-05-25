@@ -60,3 +60,13 @@ class ImagesNews(models.Model):
 
     class Meta:
         verbose_name_plural = 'ImagesNews'
+
+
+class LikesNews(models.Model):
+    """Модель хранения лайков к новостям."""
+    user_liked = models.ForeignKey(UserBase, on_delete=models.CASCADE)
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'LikesNews'
+

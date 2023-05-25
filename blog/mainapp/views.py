@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View, FormView
-from .models import UserBase, Article, LikesArticle, News, ImagesNews
-from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm, NewsDeleteForm
+from .models import UserBase, Article, LikesArticle, News, ImagesNews, LikesNews
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm,\
+    ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm, NewsDeleteForm, LikesNewsAddForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -203,3 +204,18 @@ class NewsDeleteView(LoginRequiredMixin, UpdateView):
         form.instance.deleted = True
         return super().form_valid(form)
 
+
+class LikesNewsAddListView(LoginRequiredMixin, View):
+    """Представление для добавления лайков пользователями к статьям."""
+    login_url = '/login/'
+
+    def post(self, request, pk):
+        if not LikesNews.objects.filter(news=News.objects.get(id=pk), user_liked=self.request.user):
+            form = LikesNewsAddForm(request.POST)
+            form.instance.user_liked = self.request.user
+            form.instance.news = News.objects.get(id=pk)
+            form.save()
+            return redirect('/news-list/')
+        else:
+            LikesNews.objects.filter(news=News.objects.get(id=pk), user_liked=self.request.user).delete()
+            return redirect('/news-list/')
