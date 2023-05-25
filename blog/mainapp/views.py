@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View, FormView
@@ -241,3 +242,18 @@ class CommentsNewsCreateView(LoginRequiredMixin, View):
             return redirect(f'/news-detail/{pk}')
         else:
             return redirect(f'/news-detail/{pk}')
+        
+
+class SearchArticleView(ListView):
+    """Представление поиска для статей."""
+    template_name = 'mainapp/search.html'
+
+    def get_queryset(self):
+        search_request = self.request.GET.get('search')
+        return Article.objects.filter(Q(title__icontains= search_request) | Q(preview__icontains=search_request) | Q(body__icontains=search_request) & Q(deleted=False))
+    
+    def get_context_data(self, *, object_list=None, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        context['search'] = self.request.GET.get('search')
+        print(context)
+        return context

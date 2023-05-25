@@ -47,8 +47,8 @@
           
         </ul>
         
-        <form class="d-flex mt-3" role="search">
-          <input class="form-control me-2" type="search" placeholder="Введите" aria-label="Search">
+        <form class="d-flex mt-3" role="search" action="/search/" method="get">
+          <input class="form-control me-2" type="text" placeholder="Введите" name="search">
           <button class="btn btn-secondary" type="submit">Найти</button>
         </form>
         {% if user.is_authenticated %}
