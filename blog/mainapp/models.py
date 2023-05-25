@@ -70,3 +70,13 @@ class LikesNews(models.Model):
     class Meta:
         verbose_name_plural = 'LikesNews'
 
+
+class CommentsNews(models.Model):
+    """Модель хранения комментариев к новостям."""
+    commentator = models.ForeignKey(UserBase, on_delete=models.SET_NULL, null=True)
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    text_comments = models.CharField(max_length=400)
+    date_create = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+        verbose_name_plural = 'CommentsNews'

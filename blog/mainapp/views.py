@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View, FormView
 from .models import UserBase, Article, LikesArticle, News, ImagesNews, LikesNews
 from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm,\
-    ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm, NewsDeleteForm, LikesNewsAddForm
+    ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm, \
+    NewsDeleteForm, LikesNewsAddForm, CommentsNewsCreateForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -225,3 +226,18 @@ class NewsDetailView(DetailView):
     """Представление для подробного просмотра новости и ее комментирования."""
     model = News
     template_name = 'mainapp/news_detail.html'
+
+
+class CommentsNewsCreateView(LoginRequiredMixin, View):
+    """Класс создания комментариев к новостям.""" 
+    login_url = '/login/'
+
+    def post(self, request, pk):
+        if request.POST['text_comments']:
+            form = CommentsNewsCreateForm(request.POST)
+            form.instance.commentator = self.request.user
+            form.instance.news = News.objects.get(id=pk)
+            form.save()
+            return redirect(f'/news-detail/{pk}')
+        else:
+            return redirect(f'/news-detail/{pk}')

@@ -78,8 +78,29 @@
             {% endif %}
           </form>
         </div>
-      {% endif %}
       
+
+      <div class="mb-3">
+        <h5 class="display-6">Оставьте комментарий тут</h5>
+      <form action="/comments-news-create/{{object.id}}" method="post">
+        {% csrf_token %}
+        
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Введите комментарий тут" name="text_comments"></textarea>
+        <button class="btn btn-primary" style="margin-top: 10px;">Отправить комментарий</button>
+      </form> 
+    </div>
+      {% for comment in object.commentsnews_set.all reversed %}
+        <div class="list-item">
+          <div class="card-header text-primary mb-3">
+            <p>@{{comment.commentator.usertag}}</p>
+            <p>{{comment.date_create}}</p>
+          </div>
+          <div class="card-body ">
+            <p class="card-text text-bg-info mb-3">{{comment.text_comments}}</p>
+          </div>
+        </div>
+      {% endfor %}
+      {% endif %}
     </div>
 </div>
 </div>

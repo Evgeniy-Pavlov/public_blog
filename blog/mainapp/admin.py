@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserBase, Article, CommentsArticle, LikesArticle, News, ImagesNews, LikesNews
+from .models import UserBase, Article, CommentsArticle, LikesArticle, News, ImagesNews, LikesNews, CommentsNews
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -47,3 +47,8 @@ class AdminImageNews(admin.ModelAdmin):
 @admin.register(LikesNews)
 class AdminLikesArticle(admin.ModelAdmin):
     list_display = ('user_liked', 'news')
+
+
+@admin.register(CommentsNews)
+class AdminCommentsArticle(admin.ModelAdmin):
+    list_display = ('commentator', 'news', 'text_comments', 'date_create')
