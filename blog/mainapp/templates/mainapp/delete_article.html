@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="card border-light mb-3" style="max-width: auto;">
+    <form  method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p class="lead">Вы действительно хотите удалить статью? Восстановление статьи возможно только при помощи администратора.</p>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a class="btn btn-primary" style="margin-left: 5px;" href="/">Отмена</a>
+    </form>
+    </div>
+{% endblock %}

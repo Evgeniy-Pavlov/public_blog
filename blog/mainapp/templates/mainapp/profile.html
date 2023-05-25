@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<a href="/">Вернуться на главную страницу</a>
+
+<h3>Информация о пользователе</h3>
+    
+    <h1 class="display-6 lead">{{user.username}}</h1>
+    {% if user.logo %}
+    <img src="{{user.logo.url}}" class= "rounded-circle" width="150" height="150">
+    {% endif %}
+    <p class="lead">Usertag: @{{user.usertag}}</p>
+    {% if user.last_name %}
+    <p class="lead">Фамилия: {{user.last_name}}</p>
+    {% endif %}
+    {% if user.first_name %}
+    <p class="lead">Имя: {{user.first_name}}</p>
+    {% endif %}
+    {% if user.patronymic %}
+    <p class="lead">Отчество: {{user.patronymic}}</p>
+    {% endif %}
+    {% if user.company %}
+    <p class="lead">Компания: {{user.company}}</p>
+    {% endif %}
+    {% if user.about_me %}
+    <p class="lead">О пользователе: {{user.about_me}}</p>
+    {% endif %}
+      <ul>
+        <li><a href="/user-update/{{user.id}}">Редактировать</a></li>
+        <li><a href="/change-password/{{user.id}}">Изменить пароль</a></li>
+      </ul>
+      
+    <p class="base">Профиль создан: {{user.date_create}}</p>
+
+{% endblock %}
+
