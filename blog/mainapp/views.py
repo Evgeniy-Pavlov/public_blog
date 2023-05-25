@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, View, FormView
 from .models import UserBase, Article, LikesArticle, News, ImagesNews
-from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm
+from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm, ArticleForm, ArticleDeleteForm, CommentsArticleCreateForm, LikesArticleAddForm, NewsForm, NewsDeleteForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -171,7 +171,7 @@ class LikesArticleListAddView(LoginRequiredMixin, View):
 class CreateNewsView(LoginRequiredMixin, FormView):
     """Представление для создания новостей."""
     login_url = '/login/'
-    success_url = '/'
+    success_url = '/news-list/'
     template_name = 'mainapp/news_create.html'
     form_class = NewsForm
 
@@ -190,5 +190,16 @@ class NewsListView(ListView):
     template_name = 'mainapp/news_list.html'
 
 
+class NewsDeleteView(LoginRequiredMixin, UpdateView):
+    """Представление удаления новости.
+    Новости проставляется признак удаления и она более в общем списке не отображается."""
+    login_url = '/login/'
+    model = News
+    form_class = NewsDeleteForm
+    template_name = 'mainapp/delete_news.html'
+    success_url = '/news-list/'
 
+    def form_valid(self, form) -> HttpResponse:
+        form.instance.deleted = True
+        return super().form_valid(form)
 

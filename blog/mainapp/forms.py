@@ -68,7 +68,7 @@ class ArticleDeleteForm(forms.ModelForm):
     """Форма удаления статьи"""
 
     class Meta:
-        model=Article
+        model = Article
         fields = ()
 
 
@@ -98,3 +98,10 @@ class NewsForm(forms.ModelForm):
         model = News
         fields = ('text',)
 
+
+class NewsDeleteForm(forms.ModelForm):
+    """Форма удаления новости"""
+
+    class Meta:
+        model = News
+        fields = ()

@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from mainapp.views import RegisterView, UserLoginView, UserLogoutView, UserUpdateView, UserDetailView, \
 UserPasswordUpdateView, ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, \
-ArticleDeleteView, CommentsCreateView, LikesArticleAddView, CreateNewsView, NewsListView, LikesArticleListAddView
+ArticleDeleteView, CommentsCreateView, LikesArticleAddView, CreateNewsView, NewsListView, LikesArticleListAddView, \
+NewsDeleteView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -39,5 +40,6 @@ urlpatterns = [
     path('liked/<int:pk>', LikesArticleAddView.as_view()),
     path('news-create/', CreateNewsView.as_view()),
     path('news-list/', NewsListView.as_view()),
-    path('liked-in-list/<int:pk>', LikesArticleListAddView.as_view())
+    path('liked-in-list/<int:pk>', LikesArticleListAddView.as_view()),
+    path('news-delete/<int:pk>', NewsDeleteView.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
