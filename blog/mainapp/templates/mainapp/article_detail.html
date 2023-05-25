@@ -65,7 +65,7 @@
       <button class="btn btn-primary" style="margin-top: 10px;">Отправить комментарий</button>
     </form> 
   </div>
-    {% for comment in object.commentsarticle_set.all %}
+    {% for comment in object.commentsarticle_set.all reversed %}
       <div class="list-item">
         <div class="card-header text-primary mb-3">
           <p>@{{comment.commentator.usertag}}</p>

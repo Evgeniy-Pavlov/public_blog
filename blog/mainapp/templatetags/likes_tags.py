@@ -22,3 +22,10 @@ def is_liked_news_in_list(context):
     """Пользовательский тэг для проверки числа лайков в представлении NewsListView."""
     likes_user = LikesNews.objects.filter(news=News.objects.get(id=context['news'].id), user_liked=context['user'])
     return bool(likes_user)
+
+
+@register.simple_tag(takes_context=True)
+def is_liked_news(context):
+    """Пользовательский тэг для проверки числа лайков в представлении NewsListView."""
+    likes_user = LikesNews.objects.filter(news=News.objects.get(id=context['object'].id), user_liked=context['user'])
+    return bool(likes_user)

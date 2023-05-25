@@ -219,3 +219,9 @@ class LikesNewsAddListView(LoginRequiredMixin, View):
         else:
             LikesNews.objects.filter(news=News.objects.get(id=pk), user_liked=self.request.user).delete()
             return redirect('/news-list/')
+        
+
+class NewsDetailView(DetailView):
+    """Представление для подробного просмотра новости и ее комментирования."""
+    model = News
+    template_name = 'mainapp/news_detail.html'

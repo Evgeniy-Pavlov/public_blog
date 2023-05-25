@@ -2,10 +2,12 @@
 {% block body %}
 {% load static %}
 {% load likes_tags %}
-{% for art in object_list %}
+{% for art in object_list reversed  %}
     {% if not art.deleted %}
     <div class="card border-primary mb-3" style="max-width: 1200px; margin: 0 auto;">
-      <div class="card-header"><div class="lead">@{{art.author.usertag}}</div></div>
+      <div class="card-header"><div class="lead">@{{art.author.usertag}}</div>
+      <p class="card-text">Создано: {{art.date_create}}</p>
+    </div>
         
     <div class="card-body">
         
