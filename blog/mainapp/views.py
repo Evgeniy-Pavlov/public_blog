@@ -152,6 +152,22 @@ class LikesArticleAddView(LoginRequiredMixin, View):
             return redirect(f'/article-detail/{pk}')
         
 
+class LikesArticleListAddView(LoginRequiredMixin, View):
+    """Представление для добавления лайков пользователями к статьям в ленте статей."""
+    login_url = '/login/'
+
+    def post(self, request, pk):
+        if not LikesArticle.objects.filter(article=Article.objects.get(id=pk), user_liked=self.request.user):
+            form = LikesArticleAddForm(request.POST)
+            form.instance.user_liked = self.request.user
+            form.instance.article = Article.objects.get(id=pk)
+            form.save()
+            return redirect('/')
+        else:
+            LikesArticle.objects.filter(article=Article.objects.get(id=pk), user_liked=self.request.user).delete()
+            return redirect('/')
+        
+
 class CreateNewsView(LoginRequiredMixin, FormView):
     """Представление для создания новостей."""
     login_url = '/login/'
@@ -169,6 +185,7 @@ class CreateNewsView(LoginRequiredMixin, FormView):
 
 
 class NewsListView(ListView):
+    """Представление ленты новостей."""
     model = News
     template_name = 'mainapp/news_list.html'
 
